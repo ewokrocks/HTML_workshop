@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  /* Center the form horizontally and vertically */
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  /* Style for the buttons */
+  .button-container {
+    text-align: center;
+  }
+
+  /* Style for individual buttons */
+  .form-button {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  /* Style for form input fields */
+  .form-input {
+    margin: 5px;
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+</style>
+</head>
+<body>
+  <div class="button-container">
+    <form action="https://e.tsi.lv/user/profile.php" method="get">
+      <button class="form-button" type="submit">GET</button>
+    </form>
+
+    <form id="post-form">
+      <label for="post-name">Name:</label>
+      <input class="form-input" type="text" id="post-name" name="name"><br>
+
+      <label for="post-faculty">Faculty:</label>
+      <input class="form-input" type="text" id="post-faculty" name="faculty"><br>
+
+      <label for="post-surname">Surname:</label>
+      <input class="form-input" type="text" id="post-surname" name="surname"><br>
+
+      <label for="post-id">ID:</label>
+      <input class="form-input" type="text" id="post-id" name="id"><br>
+
+      <button class="form-button" type="button" onclick="sendPostRequest()">POST</button>
+    </form>
+  </div>
+
+  <script>
+    function sendPostRequest() {
+      const name = document.getElementById("post-name").value.trim();
+      const faculty = document.getElementById("post-faculty").value.trim();
+      const surname = document.getElementById("post-surname").value.trim();
+      const id = document.getElementById("post-id").value.trim();
+
+      // Check if at least one field is filled out
+      if (!name || !faculty || !surname || !id) {
+        alert("Please enter all fields for the POST request.");
+        return;
+      }
+
+      const formData = {
+        name,
+        faculty,
+        surname,
+        id
+      };
+
+      // Send a POST request with the form data in JSON format
+      fetch("https://e.tsi.lv/user/profile.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Handle the response data if needed
+        console.log(data);
+      })
+      .catch(error => {
+        // Handle any errors that occur during the request
+        console.error(error);
+      });
+    }
+  </script>
+</body>
+</html>
